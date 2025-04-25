@@ -21,7 +21,7 @@ jobs:
       - name: Docker imajını çek
         run: docker pull ayseknd/alistirma:testinium.v2
 
-      # 3. Docker imajını test et (container'ı çalıştır)
+      # 3. Docker container'ını çalıştır
       - name: Docker container'ını çalıştır
         run: |
           docker run --name alistirma-container -d ayseknd/alistirma:testinium.v2
@@ -33,22 +33,10 @@ jobs:
           docker exec alistirma-container echo "Container çalışıyor!"  # Container içinde komut çalıştır
           docker logs alistirma-container  # Container loglarını görüntüle
 
-      # 5. Docker imajını build et (eğer gerekliyse)
-      - name: Docker imajını build et
-        run: |
-          docker build -t my-app .
-
-      # 6. Docker imajını push et (opsiyonel)
-      - name: Docker imajını push et
-        run: |
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker tag ayseknd/alistirma:testinium.v2 username/your-repository:latest
-          docker push username/your-repository:latest
-
-      # 7. Docker container'ını durdur
+      # 5. Docker container'ını durdur
       - name: Docker container'ını durdur
         run: docker stop alistirma-container
 
-      # 8. Docker container'ını sil
+      # 6. Docker container'ını sil
       - name: Docker container'ını sil
         run: docker rm alistirma-container
